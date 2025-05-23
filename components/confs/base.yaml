@@ -1,40 +1,12 @@
-sensor:
-  - platform: template
-    name: "Battery Level"
-    id: battery_level
-  - platform: template
-    name: "Battery Used"
-    id: battery_used
-  - platform: template
-    name: "Charging Time"
-    id: charging_time
-  - platform: template
-    name: "Battery Voltage"
-    id: battery_voltage
-  - platform: template
-    name: "Firmware Version"
-    id: firmware_version
-
-text_sensor:
-  - platform: template
-    name: "Mode"
-    id: mode
-  - platform: template
-    name: "Status"
-    id: status
-  - platform: template
-    name: "Last Code"
-    id: last_code
-
 mower:
-  id: automower_component
+  id: mower_id
   uart_id: uart_mower
   update_interval: 5s
-  battery_level: battery_level
-  battery_used: battery_used
-  charging_time: charging_time
-  battery_voltage: battery_voltage
-  firmware_version: firmware_version
-  mode: mode
-  status: status
-  last_code: last_code
+  # battery_level: battery_level
+  # battery_used: battery_used
+  # charging_time: charging_time
+  # battery_voltage: battery_voltage
+  # firmware_version: firmware_version
+  # mode: mode
+  # status: status
+  # last_code: last_code

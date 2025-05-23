@@ -1,5 +1,6 @@
 select:
   - platform: template
+    id: mode_select
     name: "Mode select"
     update_interval: 10s
     options:
@@ -8,20 +9,10 @@ select:
       - "HOME"
       - "DEMO"
     lambda: |-
-      Automower *mower = (Automower *) id(automower);
-      return {mower->modeTextSensor->state};
+      esphome::mower::Automower *mower = (esphome::mower::Automower *) id(mower_id);
+      return {mower->get_mode_text_sensor()->state};
     set_action:
       then:
-      - lambda: |-
-          Automower *mower = (Automower *) id(automower);
-          mower->setMode(x);
-
-
-
-# select:
-# - platform: custom
-#   lambda: |-
-#     Automower *mower = (Automower *) id(automower);
-#     return {mower->modeSelect};
-#   id: mode_select
-#   name: "Mode"
+        - lambda: |-
+            esphome::mower::Automower *mower = (esphome::mower::Automower *) id(mower_id);
+            mower->set_mode(x);
