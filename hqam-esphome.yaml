@@ -46,6 +46,7 @@ packages:
     files:
       [
         components/boards/esp32dev.yaml,
+        components/confs/base.yaml,
         components/confs/button.yaml,
         components/confs/select.yaml,
         components/confs/sensor.yaml,
