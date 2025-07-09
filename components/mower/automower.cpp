@@ -9,33 +9,46 @@ namespace esphome
         Automower::Automower(uart::UARTComponent *parent, uint32_t update_interval)
             : PollingComponent(update_interval), uart::UARTDevice(parent)
         {
+
+            battery_temperature_sensor_ = new template_::TemplateSensor();
             battery_level_sensor_ = new template_::TemplateSensor();
             battery_used_sensor_ = new template_::TemplateSensor();
-            charging_time_sensor_ = new template_::TemplateSensor();
             battery_voltage_sensor_ = new template_::TemplateSensor();
+            blade_motor_speed_sensor_ = new template_::TemplateSensor();
+            charging_time_sensor_ = new template_::TemplateSensor();
             firmware_version_sensor_ = new template_::TemplateSensor();
+
+            last_code_received_text_sensor_ = new template_::TemplateTextSensor();
             mode_text_sensor_ = new template_::TemplateTextSensor();
             status_text_sensor_ = new template_::TemplateTextSensor();
-            last_code_received_text_sensor_ = new template_::TemplateTextSensor();
         }
 
+        void Automower::set_battery_temperature_sensor(template_::TemplateSensor *s) { battery_temperature_sensor_ = s; }
         void Automower::set_battery_level_sensor(template_::TemplateSensor *s) { battery_level_sensor_ = s; }
         void Automower::set_battery_used_sensor(template_::TemplateSensor *s) { battery_used_sensor_ = s; }
-        void Automower::set_charging_time_sensor(template_::TemplateSensor *s) { charging_time_sensor_ = s; }
         void Automower::set_battery_voltage_sensor(template_::TemplateSensor *s) { battery_voltage_sensor_ = s; }
+        void Automower::set_blade_motor_speed_sensor(template_::TemplateSensor *s) { blade_motor_speed_sensor_ = s; }
+        void Automower::set_charging_time_sensor(template_::TemplateSensor *s) { charging_time_sensor_ = s; }
         void Automower::set_firmware_version_sensor(template_::TemplateSensor *s) { firmware_version_sensor_ = s; }
+
+        void Automower::set_last_code_received_text_sensor(template_::TemplateTextSensor *s) { last_code_received_text_sensor_ = s; }
         void Automower::set_mode_text_sensor(template_::TemplateTextSensor *s) { mode_text_sensor_ = s; }
         void Automower::set_status_text_sensor(template_::TemplateTextSensor *s) { status_text_sensor_ = s; }
-        void Automower::set_last_code_received_text_sensor(template_::TemplateTextSensor *s) { last_code_received_text_sensor_ = s; }
 
+        template_::TemplateSensor *Automower::get_battery_temperature_sensor() const { return battery_temperature_sensor_; }
+        template_::TemplateSensor *Automower::get_blade_motor_speed_sensor() const
+        {
+            return blade_motor_speed_sensor_;
+        }
         template_::TemplateSensor *Automower::get_battery_level_sensor() const { return battery_level_sensor_; }
         template_::TemplateSensor *Automower::get_battery_used_sensor() const { return battery_used_sensor_; }
-        template_::TemplateSensor *Automower::get_charging_time_sensor() const { return charging_time_sensor_; }
         template_::TemplateSensor *Automower::get_battery_voltage_sensor() const { return battery_voltage_sensor_; }
+        template_::TemplateSensor *Automower::get_charging_time_sensor() const { return charging_time_sensor_; }
         template_::TemplateSensor *Automower::get_firmware_version_sensor() const { return firmware_version_sensor_; }
+
+        template_::TemplateTextSensor *Automower::get_last_code_received_text_sensor() const { return last_code_received_text_sensor_; }
         template_::TemplateTextSensor *Automower::get_mode_text_sensor() const { return mode_text_sensor_; }
         template_::TemplateTextSensor *Automower::get_status_text_sensor() const { return status_text_sensor_; }
-        template_::TemplateTextSensor *Automower::get_last_code_received_text_sensor() const { return last_code_received_text_sensor_; }
 
         void Automower::setup() {}
 
@@ -99,13 +112,14 @@ namespace esphome
                 set_retry(
                     5, 3, [this, index](uint8_t attempt) -> RetryResult
                     {
-          if (!_writable) return RetryResult::RETRY;
-          auto it = pollingCommandList.begin();
-          std::advance(it, index);
-          write_array(*it, 5);
-          _writable = false;
-          sendCommands(index + 1);
-          return RetryResult::DONE; },
+                        if (!_writable) return RetryResult::RETRY;
+                        auto it = pollingCommandList.begin();
+                        ESP_LOGD("Automower", "UART TX: %02X %02X %02X %02X %02X", (*it)[0], (*it)[1], (*it)[2], (*it)[3], (*it)[4]);
+                        std::advance(it, index);
+                        write_array(*it, 5);
+                        _writable = false;
+                        sendCommands(index + 1);
+                        return RetryResult::DONE; },
                     2.0f);
             }
         }
@@ -135,17 +149,25 @@ namespace esphome
                 case 0x01F1:
                     publishStatus(val);
                     break;
-                case 0x01EF:
-                    if (battery_level_sensor_)
-                        battery_level_sensor_->publish_state(val);
-                    break;
                 case 0x01EC:
                     if (charging_time_sensor_)
                         charging_time_sensor_->publish_state(val);
                     break;
+                case 0x01EF:
+                    if (battery_level_sensor_)
+                        battery_level_sensor_->publish_state(val);
+                    break;
+                case 0x0233:
+                    if (battery_temperature_sensor_)
+                        battery_temperature_sensor_->publish_state(val);
+                    break;
                 case 0x2EE0:
                     if (battery_used_sensor_)
                         battery_used_sensor_->publish_state(val);
+                    break;
+                case 0x2EEA:
+                    if (blade_motor_speed_sensor_)
+                        blade_motor_speed_sensor_->publish_state(val);
                     break;
                 case 0x2EF4:
                     if (battery_voltage_sensor_)
