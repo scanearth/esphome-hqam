@@ -3,33 +3,33 @@ button:
     name: "Restart"
 
   - platform: template
-    name: "Moteur droit 0x8000"
+    name: "Right Motor 0x8000"
     on_press:
-      - logger.log: Button Moteur droit 0x8000
+      - logger.log: Right Motor Button 0x8000
       - lambda: |-
           Automower *mower = (Automower *) id(automower);
           mower->setRightMotor(0x8000);
 
   - platform: template
-    name: "Moteur droit 0x0000"
+    name: "Right Motor 0x0000"
     on_press:
-      - logger.log: Button Moteur droit 0x0000
+      - logger.log: Right Motor Button 0x0000
       - lambda: |-
           Automower *mower = (Automower *) id(automower);
           mower->setRightMotor(0x0000);
 
   - platform: template
-    name: "Moteur gauche 0x8000"
+    name: "Left Motor 0x8000"
     on_press:
-      - logger.log: Button Moteur gauche 0x8000
+      - logger.log: Left Motor Button 0x8000
       - lambda: |-
           Automower *mower = (Automower *) id(automower);
           mower->setLeftMotor(0x8000);
 
   - platform: template
-    name: "Moteur gauche 0x0000"
+    name: "Left Motor 0x0000"
     on_press:
-      - logger.log: Button Moteur gauche 0x0000
+      - logger.log: Left Motor Button 0x0000
       - lambda: |-
           Automower *mower = (Automower *) id(automower);
           mower->setLeftMotor(0x0000);
