@@ -41,7 +41,7 @@ packages:
     ref: main
     refresh: always
     files: [
-      components/boards/azd-esp32-v4.yaml,
+      components/boards/esp8266.yaml,
       components/confs/button.yaml,
       components/confs/select.yaml,
       components/confs/sensor.yaml,
