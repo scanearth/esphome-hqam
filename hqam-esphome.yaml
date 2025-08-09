@@ -32,12 +32,12 @@ wifi:
 captive_portal:
 
 external_components:
-  - source: github://Bokenbergen/esphome-hqam@main
+  - source: github://scanearth/esphome-hqam@main
     refresh: always
 
 packages:
   remote_package:
-    url: https://github.com/Bokenbergen/esphome-hqam
+    url: https://github.com/scanearth/esphome-hqam
     ref: main
     refresh: always
     files: [
