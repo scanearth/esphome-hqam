@@ -205,6 +205,9 @@ namespace esphome
             case 0x0001:
                 mode = "AUTO";
                 break;
+            case 0x0002:
+                mode = "Charging then AUTO";
+                break;
             case 0x0003:
                 mode = "HOME";
                 break;
@@ -227,6 +230,9 @@ namespace esphome
             std::string s;
             switch (val)
             {
+            case 0x0010:
+                s = "Outside working area";
+                break;
             case 0x0012:
                 s = "LBV Low battery voltage";
                 break;
@@ -235,6 +241,9 @@ namespace esphome
                 break;
             case 0x0006:
                 s = "Left wheel motor blocked";
+                break;
+            case 0x0008:
+                s = "Right wheel motor blocked";
                 break;
             case 0x000C:
                 s = "No loop signal";
@@ -265,6 +274,9 @@ namespace esphome
                 break;
             case 0x03F6:
                 s = "Charging";
+                break;
+            case 0x03F8:
+                s = "Waiting timer2";
                 break;
             case 0x1016:
                 s = "Waiting timer";
