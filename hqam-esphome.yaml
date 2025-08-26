@@ -46,7 +46,7 @@ packages:
     ref: main
     refresh: always
     files: [
-        components/boards/esp8266.yaml,
+        components/boards/d1_mini.yaml,
         components/confs/base.yaml,
         components/confs/button.yaml,
         components/confs/select.yaml,
