@@ -1,11 +1,13 @@
 substitutions:
   name: "automower"
-  friendlyName: "Automower"
+  friendlyName: "Husqvarna Automower 220AC"
   timezone: "Europe/Stockholm"
-  rxpin: "GPIO16"
-  txpin: "GPIO17"
+  rxpin: "GPIO3"
+  txpin: "GPIO1"
   baud: "9600"
-
+  device_password: !secret automower_password
+  device_api_key: !secret automower_api_key
+  
 esphome:
   name: ${name}
   friendly_name: ${friendlyName}
@@ -17,11 +19,11 @@ time:
 
 api:
   encryption:
-    key: "YOUR_API"
+    key: "${device_api_key}"
 
 ota:
   - platform: esphome
-    password: "YOUR_OTA"
+    password: "${device_password}"
 
 wifi:
   ssid: !secret wifi_ssid
@@ -30,22 +32,21 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "${friendlyName} Fallback Hotspot"
-    password: "YOUR_AP"
+    password: !secret wifi_password
 
 captive_portal:
 
 external_components:
-  - source: github://orrpan/esphome-hqam@main
+  - source: github://scanearth/esphome-hqam@main
     refresh: always
 
 packages:
   remote_package:
-    url: https://github.com/orrpan/esphome-hqam
+    url: https://github.com/scanearth/esphome-hqam
     ref: main
     refresh: always
-    files:
-      [
-        components/boards/esp32dev.yaml,
+    files: [
+        components/boards/esp8266.yaml,
         components/confs/base.yaml,
         components/confs/button.yaml,
         components/confs/select.yaml,
