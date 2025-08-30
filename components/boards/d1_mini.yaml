@@ -12,7 +12,6 @@ uart:
   id: uart_mower
   rx_pin:
     number: ${rxpin}
-    inverted: true
   tx_pin:
     number: ${txpin}
   baud_rate: ${baud}
