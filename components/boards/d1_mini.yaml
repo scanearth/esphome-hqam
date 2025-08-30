@@ -8,10 +8,10 @@ logger:
   level: debug # makes uart stream available in esphome logstream
   baud_rate: 0 # disable logging over uart
 pin:
-  number: ${rxpin}
+  number: D4
   mode:
     pullup: true
-  number: ${txpin}
+  number: D5
   mode:
     pullup: true
 uart:
