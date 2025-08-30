@@ -12,12 +12,13 @@ uart:
   id: uart_mower
   rx_pin:
     number: ${rxpin}
+    inverted: true
   tx_pin:
     number: ${txpin}
   baud_rate: ${baud}
   debug:
     direction: BOTH
-    dummy_receiver: true
+    dummy_receiver: false
     after:
       delimiter: "\n"
     sequence:
