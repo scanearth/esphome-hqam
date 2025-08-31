@@ -139,9 +139,8 @@ namespace esphome
                 uint16_t addr = ((readData[1] & 0x7F) << 8) | readData[2];
                 uint16_t val = (readData[4] << 8) | readData[3];
 
-                //ESP_LOGD("Automower", "Decoded: addr=0x%04X val=0x%04X", addr, val);
-                ESP_LOGD("Automower", "Address: 0x%04X, Value: %d, Sensor: %s", addr, val, Templatesensor);
-                switch (addr)
+                ESP_LOGD("Automower", "Decoded: addr=0x%04X val=0x%04X", addr, val);
+                    switch (addr)
                 {
                 case 0x012C:
                     publishMode(val);
