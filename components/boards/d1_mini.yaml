@@ -8,18 +8,23 @@ logger:
   level: debug # makes uart stream available in esphome logstream
   baud_rate: 0 # disable logging over uart
 
+
+rx_pin:
+  number: ${rxpin}
+    mode:
+      input: true
+      pullup: true
+  number: ${txpin}
+    mode:
+      output: true
+      pullup: true
+
 uart:
   id: uart_mower
   rx_pin:
     number: ${rxpin}
-    mode:
-      input: true
-      pullup: true
   tx_pin:
     number: ${txpin}
-    mode:
-      output: true
-      pullup: true
   baud_rate: ${baud}
   debug:
     direction: BOTH
