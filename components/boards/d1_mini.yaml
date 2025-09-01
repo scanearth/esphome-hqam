@@ -12,8 +12,12 @@ uart:
   id: uart_mower
   rx_pin:
     number: ${rxpin}
+    mode:
+      pullup: true
   tx_pin:
     number: ${txpin}
+    mode:
+      pullup: true
   baud_rate: ${baud}
   debug:
     direction: BOTH
