@@ -9,7 +9,7 @@ logger:
   baud_rate: 0 # disable logging over uart
 
 
-rx_pin:
+pin:
   number: ${rxpin}
     mode:
       input: true
