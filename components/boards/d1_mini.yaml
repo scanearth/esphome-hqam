@@ -13,10 +13,12 @@ uart:
   rx_pin:
     number: ${rxpin}
     mode:
+      input: true
       pullup: true
   tx_pin:
     number: ${txpin}
     mode:
+      output: true
       pullup: true
   baud_rate: ${baud}
   debug:
